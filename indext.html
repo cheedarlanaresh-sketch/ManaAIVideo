@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101025">
+  <title>Mana AI Video</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: #101025;
+      padding: 20px;
+    }
+    .app { max-width: 480px; margin: auto; }
+    h1 { text-align: center; color: #bda7ff; }
+    .sub { text-align: center; color: #bbb8d5; }
+    .panel {
+      background: #1d1b38;
+      border: 1px solid #39345e;
+      padding: 18px;
+      border-radius: 18px;
+      margin-top: 18px;
+    }
+    label { display: block; margin: 14px 0 8px; }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    input, textarea, select {
+      color: white;
+      background: #121129;
+      border: 1px solid #514976;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    button {
+      border: 0;
+      background: #8764f7;
+      color: white;
+      font-weight: bold;
+      margin-top: 14px;
+      cursor: pointer;
+    }
+    button:active { opacity: .8; }
+    #photoPreview, #videoPreview {
+      display: none;
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 14px;
+    }
+    #status { color: #e0d7ff; line-height: 1.5; }
+    .small { color: #bcb8d2; font-size: 13px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>✨ Mana AI Video</h1>
+    <p class="sub">మీ ఫోటోకు కొత్త జీవం ఇవ్వండి!</p>
+
+    <section class="panel">
+      <label for="photo">1. మీ ఫోటో ఎంచుకోండి</label>
+      <input id="photo" type="file" accept="image/*">
+      <img id="photoPreview" alt="మీరు ఎంచుకున్న ఫోటో">
+
+      <label for="prompt">2. వీడియో ఎలా ఉండాలి?</label>
+      <textarea id="prompt"
+        placeholder="ఉదా: ఈ ఫోటోలోని వ్యక్తి నవ్వుతూ నెమ్మదిగా నడవాలి..."></textarea>
+
+      <label for="style">3. వీడియో స్టైల్</label>
+      <select id="style">
+        <option value="Realistic">Realistic</option>
+        <option value="Cinematic">Cinematic</option>
+        <option value="Anime">Anime</option>
+        <option value="Romantic">Romantic</option>
+      </select>
+
+      <label for="duration">4. వీడియో నిడివి</label>
+      <select id="duration">
+        <option value="5">5 seconds</option>
+        <option value="10">10 seconds</option>
+      </select>
+
+      <button id="generate">🎬 Generate AI Video</button>
+      <p id="status" role="status">ఫోటో ఎంచుకుని మీ వివరణ రాయండి.</p>
+
+      <video id="videoPreview" controls playsinline></video>
+      <a id="download" style="display:none;color:#c8b7ff"
+         download="mana-ai-video.mp4">వీడియో Download చేయండి</a>
+
+      <p class="small">
+        గమనిక: ఇది ప్రారంభ వెర్షన్. నిజమైన AI వీడియో తయారీకి
+        AI వీడియో సర్వీస్‌ను కనెక్ట్ చేయాలి.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const photo = document.getElementById("photo");
+    const photoPreview = document.getElementById("photoPreview");
+    const prompt = document.getElementById("prompt");
+    const status = document.getElementById("status");
+    const generate = document.getElementById("generate");
+
+    let selectedImage = null;
+
+    photo.addEventListener("change", () => {
+      const file = photo.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        status.textContent = "దయచేసి image ఫైల్ ఎంచుకోండి.";
+        return;
+      }
+
+      selectedImage = file;
+      photoPreview.src = URL.createObjectURL(file);
+      photoPreview.style.display = "block";
+      status.textContent = "ఫోటో సిద్ధంగా ఉంది. మీ prompt రాయండి.";
+    });
+
+    generate.addEventListener("click", () => {
+      if (!selectedImage) {
+        status.textContent = "ముందుగా ఫోటో ఎంచుకోండి.";
+        return;
+      }
+
+      if (!prompt.value.trim()) {
+        status.textContent = "వీడియో ఎలా ఉండాలో text రాయండి.";
+        prompt.focus();
+        return;
+      }
+
+      const style = document.getElementById("style").value;
+      const duration = document.getElementById("duration").value;
+
+      status.textContent =
+        "మీ ఫోటో, prompt సిద్ధంగా ఉన్నాయి! స్టైల్: " +
+        style + ". నిడివి: " + duration +
+        " seconds. నిజమైన వీడియో కోసం AI service API ఇంకా కనెక్ట్ చేయాలి.";
+    });
+  </script>
+</body>
+</html>
