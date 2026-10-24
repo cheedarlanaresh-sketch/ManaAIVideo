@@ -1,148 +1,249 @@
 
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101025">
-  <title>Mana AI Video</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background: #101025;
-      padding: 20px;
-    }
-    .app { max-width: 480px; margin: auto; }
-    h1 { text-align: center; color: #bda7ff; }
-    .sub { text-align: center; color: #bbb8d5; }
-    .panel {
-      background: #1d1b38;
-      border: 1px solid #39345e;
-      padding: 18px;
-      border-radius: 18px;
-      margin-top: 18px;
-    }
-    label { display: block; margin: 14px 0 8px; }
-    input, textarea, select, button {
-      width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    input, textarea, select {
-      color: white;
-      background: #121129;
-      border: 1px solid #514976;
-    }
-    textarea { min-height: 100px; resize: vertical; }
-    button {
-      border: 0;
-      background: #8764f7;
-      color: white;
-      font-weight: bold;
-      margin-top: 14px;
-      cursor: pointer;
-    }
-    button:active { opacity: .8; }
-    #photoPreview, #videoPreview {
-      display: none;
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 14px;
-    }
-    #status { color: #e0d7ff; line-height: 1.5; }
-    .small { color: #bcb8d2; font-size: 13px; line-height: 1.5; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111127">
+<title>Mana AI Video</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: #111127;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 480px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  padding: 15px 0;
+}
+
+header h1 {
+  color: #b8a2ff;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+header p {
+  color: #c7c5dc;
+  line-height: 1.5;
+}
+
+.card {
+  background: #1e1c3a;
+  border: 1px solid #39365e;
+  padding: 20px;
+  border-radius: 18px;
+  margin-top: 18px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 18px 0 9px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #514a78;
+  border-radius: 10px;
+  background: #111127;
+  color: white;
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 105px;
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(100deg, #7957ed, #b052e8);
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.preview {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-top: 15px;
+  display: none;
+  background: #101020;
+}
+
+#status {
+  margin-top: 18px;
+  color: #d4c9ff;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.note {
+  color: #bdb9d4;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  color: #aaa5c7;
+  font-size: 12px;
+  padding: 22px 0;
+}
+</style>
 </head>
+
 <body>
-  <main class="app">
-    <h1>✨ Mana AI Video</h1>
-    <p class="sub">మీ ఫోటోకు కొత్త జీవం ఇవ్వండి!</p>
+<main class="app">
 
-    <section class="panel">
-      <label for="photo">1. మీ ఫోటో ఎంచుకోండి</label>
-      <input id="photo" type="file" accept="image/*">
-      <img id="photoPreview" alt="మీరు ఎంచుకున్న ఫోటో">
+<header>
+  <h1>✨ Mana AI Video</h1>
+  <p>Turn your photos into amazing AI videos using text prompts.</p>
+</header>
 
-      <label for="prompt">2. వీడియో ఎలా ఉండాలి?</label>
-      <textarea id="prompt"
-        placeholder="ఉదా: ఈ ఫోటోలోని వ్యక్తి నవ్వుతూ నెమ్మదిగా నడవాలి..."></textarea>
+<section class="card">
 
-      <label for="style">3. వీడియో స్టైల్</label>
-      <select id="style">
-        <option value="Realistic">Realistic</option>
-        <option value="Cinematic">Cinematic</option>
-        <option value="Anime">Anime</option>
-        <option value="Romantic">Romantic</option>
-      </select>
+  <h2>Create Your Video</h2>
 
-      <label for="duration">4. వీడియో నిడివి</label>
-      <select id="duration">
-        <option value="5">5 seconds</option>
-        <option value="10">10 seconds</option>
-      </select>
+  <label for="photo">1. Upload Your Photo</label>
+  <input type="file" id="photo" accept="image/*">
 
-      <button id="generate">🎬 Generate AI Video</button>
-      <p id="status" role="status">ఫోటో ఎంచుకుని మీ వివరణ రాయండి.</p>
+  <img id="photoPreview" class="preview" alt="Selected photo">
 
-      <video id="videoPreview" controls playsinline></video>
-      <a id="download" style="display:none;color:#c8b7ff"
-         download="mana-ai-video.mp4">వీడియో Download చేయండి</a>
+  <label for="prompt">2. Describe Your Video</label>
+  <textarea id="prompt"
+    placeholder="Example: Make the person smile and walk slowly towards the camera."></textarea>
 
-      <p class="small">
-        గమనిక: ఇది ప్రారంభ వెర్షన్. నిజమైన AI వీడియో తయారీకి
-        AI వీడియో సర్వీస్‌ను కనెక్ట్ చేయాలి.
-      </p>
-    </section>
-  </main>
+  <label for="style">3. Choose Video Style</label>
+  <select id="style">
+    <option value="Realistic">Realistic</option>
+    <option value="Cinematic">Cinematic</option>
+    <option value="Anime">Anime</option>
+    <option value="Romantic">Romantic</option>
+    <option value="Fantasy">Fantasy</option>
+  </select>
 
-  <script>
-    const photo = document.getElementById("photo");
-    const photoPreview = document.getElementById("photoPreview");
-    const prompt = document.getElementById("prompt");
-    const status = document.getElementById("status");
-    const generate = document.getElementById("generate");
+  <label for="duration">4. Video Duration</label>
+  <select id="duration">
+    <option value="5">5 Seconds</option>
+    <option value="10">10 Seconds</option>
+  </select>
 
-    let selectedImage = null;
+  <button id="generate">✨ Generate AI Video</button>
 
-    photo.addEventListener("change", () => {
-      const file = photo.files[0];
-      if (!file) return;
+  <p id="status" role="status">
+    Upload a photo and enter a prompt to get started.
+  </p>
 
-      if (!file.type.startsWith("image/")) {
-        status.textContent = "దయచేసి image ఫైల్ ఎంచుకోండి.";
-        return;
-      }
+  <video id="videoPreview" class="preview"
+    controls playsinline></video>
 
-      selectedImage = file;
-      photoPreview.src = URL.createObjectURL(file);
-      photoPreview.style.display = "block";
-      status.textContent = "ఫోటో సిద్ధంగా ఉంది. మీ prompt రాయండి.";
-    });
+  <a id="downloadLink" style="display:none;color:#d4c9ff"
+    download="mana-ai-video.mp4">Download Video</a>
 
-    generate.addEventListener("click", () => {
-      if (!selectedImage) {
-        status.textContent = "ముందుగా ఫోటో ఎంచుకోండి.";
-        return;
-      }
+  <p class="note">
+    Note: The interface is ready for testing. A compatible AI
+    video generation service must be connected to create real videos.
+  </p>
 
-      if (!prompt.value.trim()) {
-        status.textContent = "వీడియో ఎలా ఉండాలో text రాయండి.";
-        prompt.focus();
-        return;
-      }
+</section>
 
-      const style = document.getElementById("style").value;
-      const duration = document.getElementById("duration").value;
+<footer>
+  Mana AI Video | Made with AI
+</footer>
 
-      status.textContent =
-        "మీ ఫోటో, prompt సిద్ధంగా ఉన్నాయి! స్టైల్: " +
-        style + ". నిడివి: " + duration +
-        " seconds. నిజమైన వీడియో కోసం AI service API ఇంకా కనెక్ట్ చేయాలి.";
-    });
-  </script>
+</main>
+
+<script>
+const photoInput = document.getElementById("photo");
+const photoPreview = document.getElementById("photoPreview");
+const promptInput = document.getElementById("prompt");
+const styleInput = document.getElementById("style");
+const durationInput = document.getElementById("duration");
+const generateButton = document.getElementById("generate");
+const statusText = document.getElementById("status");
+
+let selectedPhoto = null;
+let previewUrl = null;
+
+photoInput.addEventListener("change", function () {
+  const file = this.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    statusText.textContent = "Please select a valid image.";
+    return;
+  }
+
+  selectedPhoto = file;
+
+  if (previewUrl) {
+    URL.revokeObjectURL(previewUrl);
+  }
+
+  previewUrl = URL.createObjectURL(file);
+  photoPreview.src = previewUrl;
+  photoPreview.style.display = "block";
+
+  statusText.textContent =
+    "Photo uploaded successfully! Enter your video prompt.";
+});
+
+generateButton.addEventListener("click", function () {
+  if (!selectedPhoto) {
+    statusText.textContent =
+      "Please upload a photo first.";
+    photoInput.focus();
+    return;
+  }
+
+  if (!promptInput.value.trim()) {
+    statusText.textContent =
+      "Please describe the video you want to create.";
+    promptInput.focus();
+    return;
+  }
+
+  const prompt = promptInput.value.trim();
+  const style = styleInput.value;
+  const duration = durationInput.value;
+
+  statusText.textContent =
+    "Your request is ready! " +
+    "Style: " + style + ". " +
+    "Duration: " + duration + " seconds. " +
+    "Prompt: " + prompt + ". " +
+    "AI video generation is not connected yet. " +
+    "Connect an AI video API to generate and preview a real video.";
+});
+</script>
+
 </body>
 </html>
